@@ -6,6 +6,10 @@ export interface Message {
   type: 'user' | 'bot';
   timestamp: string;
   error?: boolean;
+  tableData?: {
+    id: string;
+    data: any;
+  }[];
   metadata?: {
     question_id?: string;
     completed?: boolean;
@@ -19,9 +23,10 @@ export interface ConversationHistory {
 }
   
 export interface StreamChunk {
-  type: 'chunk' | 'complete' | 'error';
-  content: string;
+  type: 'chunk' | 'complete' | 'error' | 'table';
+  content: string | { id: string; data: any };
   done: boolean;
+  message_id?: number;
 }
   
 export interface StreamComplete {

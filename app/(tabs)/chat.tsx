@@ -18,6 +18,7 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { MaterialIcons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { Message } from '@/types/chat';
+import TableView from '@/app/components/TableView';
 
 // AssemblyAI Configuration
 const ASSEMBLY_AI_CONFIG = {
@@ -179,6 +180,29 @@ export default function Chat() {
               );
               break;
   
+            case 'table':
+              // Handle table data
+              console.log('Received table data:', data.content);
+              setMessages(prev => 
+                prev.map(msg => 
+                  msg.id === data.message_id
+                    ? { 
+                        ...msg, 
+                        tableData: msg.tableData 
+                          ? [...msg.tableData, { 
+                              id: data.content.id, 
+                              data: data.content.data 
+                            }] 
+                          : [{ 
+                              id: data.content.id, 
+                              data: data.content.data 
+                            }]
+                      }
+                    : msg
+                )
+              );
+              break;
+  
             case 'error':
               handleStreamError(new Error(data.content), data.message_id);
               break;
@@ -334,6 +358,20 @@ export default function Chat() {
         ]}>
           {message.text}
         </Text>
+        
+        {/* Render tables if they exist */}
+        {message.tableData && message.tableData.length > 0 && (
+          <View style={styles.tableContainer}>
+            {message.tableData.map((table, index) => (
+              <View key={`table-${table.id}-${index}`} style={styles.tableWrapper}>
+                <TableView 
+                  data={table.data} 
+                  title={table.id} 
+                />
+              </View>
+            ))}
+          </View>
+        )}
       </View>
     </View>
   );
@@ -1045,5 +1083,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffe5e5',
     borderColor: '#ffcccc',
     borderWidth: 1,
+  },
+  tableContainer: {
+    marginTop: 12,
+    marginBottom: 5,
+    width: '100%',
+  },
+  tableWrapper: {
+    marginBottom: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+    borderRadius: 8,
+    overflow: 'hidden',
   },
 });
