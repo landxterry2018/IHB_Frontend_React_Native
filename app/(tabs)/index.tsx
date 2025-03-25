@@ -1,4 +1,8 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React from 'react';
+import { Image, StyleSheet, Platform, View } from 'react-native';
+import { Colors } from '@/constants/Colors';
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { useUserStore } from '@/store/userStore';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -6,48 +10,44 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 export default function HomeScreen() {
+  const colorScheme = useColorScheme() ?? 'light';
+  const { profile } = useUserStore();
+  
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
+          source={require('@/assets/images/Mosaic_SAB_banner.jpg')}
           style={styles.reactLogo}
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
+        <ThemedText type="title">Hello, {profile.firstName}!</ThemedText>
         <HelloWave />
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
+      
+      <ThemedView style={styles.welcomeContainer}>
+        <ThemedText type="subtitle" style={styles.welcomeTitle}>
+          Welcome to Mosaic AI Assistant
         </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
+        <ThemedText style={styles.welcomeSubtitle}>
+          Your AI-powered business companion is ready to help.
         </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
+        
+        <ThemedText type="subtitle" style={styles.sectionTitle}>
+          Get started with:
+        </ThemedText>
+        
+        <ThemedView style={styles.featureList}>
+          <ThemedText style={styles.featureItem}>• Quick answers to business questions</ThemedText>
+          <ThemedText style={styles.featureItem}>• Interactive responses to surveys</ThemedText>
+          <ThemedText style={styles.featureItem}>• Document analysis and summaries</ThemedText>
+          <ThemedText style={styles.featureItem}>• Data visualization and reporting</ThemedText>
+        </ThemedView>
+
+        <ThemedText style={styles.chatPrompt}>
+          Tap the "Chat" button on the navigation tab below to begin your conversation.
         </ThemedText>
       </ThemedView>
     </ParallaxScrollView>
@@ -59,16 +59,52 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+    marginBottom: 24,
   },
-  stepContainer: {
-    gap: 8,
+  welcomeContainer: {
+    gap: 16,
+    padding: 16,
+  },
+  welcomeTitle: {
+    fontSize: 20,
+    fontWeight: '600',
     marginBottom: 8,
   },
+  welcomeSubtitle: {
+    fontSize: 16,
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 8,
+  },
+  featureList: {
+    gap: 12,
+    marginLeft: 8,
+    marginBottom: 24,
+  },
+  featureItem: {
+    fontSize: 16,
+    lineHeight: 24,
+  },
+  chatPrompt: {
+    fontSize: 16,
+    fontStyle: 'italic',
+  },
+  assistancePrompt: {
+    fontSize: 18,
+    fontWeight: '500',
+    textAlign: 'center',
+  },
+  marginTop: {
+    marginTop: 16,
+  },
   reactLogo: {
-    height: 178,
-    width: 290,
+    height: 250,
+    width: 500,
     bottom: 0,
     left: 0,
     position: 'absolute',
-  },
+  }
 });
