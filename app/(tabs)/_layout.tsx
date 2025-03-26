@@ -39,6 +39,21 @@ export default function TabLayout() {
             fontWeight: 'bold',
           },
           headerShadowVisible: false,
+          headerLeft: () => (
+            <Pressable
+              onPress={handleMenuPress}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+                marginLeft: 15,
+              })}
+            >
+              <Ionicons
+                name="menu"
+                size={24}
+                color={Colors[colorScheme ?? 'light'].text}
+              />
+            </Pressable>
+          ),
         }}
       >
         <Tabs.Screen

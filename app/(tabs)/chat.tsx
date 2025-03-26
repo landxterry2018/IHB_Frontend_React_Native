@@ -43,7 +43,7 @@ const WS_CONFIG = {
 const HEARTBEAT_INTERVAL = 10000; // 10 seconds
 
 // Welcome message for the chat
-const WELCOME_MESSAGE = "Hello! I'm a multi-purpose AI assistant at Mosaic. \n\nI'm currently capable of:\n1) helping you record a safety observation \n2) capture contextual info related to variances between actual and planned production volumes \n3) answering questions regarding key financial metrics \n\nHow can I help you today?";
+const WELCOME_MESSAGE = "Hello! I'm a multi-purpose AI assistant at Mosaic. \n\nI'm currently capable of:\n1) helping you record a safety observation \n2) capturing contextual info related to variances between actual and planned production volumes \n3) answering questions regarding key financial metrics \n\nHow can I help you today?";
 
 export default function Chat() {
   const [inputMessage, setInputMessage] = useState('');

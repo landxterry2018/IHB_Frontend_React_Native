@@ -55,6 +55,31 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({ isVisible, onClose }) =>
     router.navigate('/(tabs)');
   };
 
+  const handleChatPress = () => {
+    onClose();
+    router.navigate('/(tabs)/chat');
+  };
+
+  const handleExplorePress = () => {
+    onClose();
+    router.navigate('/(tabs)/explore');
+  };
+
+  const handleInsightPress = () => {
+    onClose();
+    setTimeout(() => {
+      try {
+        router.push({
+          pathname: 'insight',
+        } as any);
+      } catch (err) {
+        const error = err as Error;
+        console.error('Navigation error:', error);
+        alert('Could not navigate to Insight. Please try again.');
+      }
+    }, 100);
+  };
+
   const handleSettingsPress = () => {
     // Toggle the settings expanded state
     setIsSettingsExpanded(!isSettingsExpanded);
@@ -139,6 +164,48 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({ isVisible, onClose }) =>
                   />
                 </View>
                 <ThemedText style={styles.menuItemText}>Home</ThemedText>
+              </View>
+            </TouchableOpacity>
+
+            {/* Chat menu item */}
+            <TouchableOpacity style={styles.menuItem} onPress={handleChatPress}>
+              <View style={styles.menuItemContent}>
+                <View style={styles.iconContainer}>
+                  <Ionicons
+                    name="chatbubbles"
+                    size={24}
+                    color={colorScheme === 'dark' ? Colors.dark.tint : Colors.light.tint}
+                  />
+                </View>
+                <ThemedText style={styles.menuItemText}>Chat</ThemedText>
+              </View>
+            </TouchableOpacity>
+
+            {/* Explore menu item */}
+            <TouchableOpacity style={styles.menuItem} onPress={handleExplorePress}>
+              <View style={styles.menuItemContent}>
+                <View style={styles.iconContainer}>
+                  <Ionicons
+                    name="paper-plane"
+                    size={24}
+                    color={colorScheme === 'dark' ? Colors.dark.tint : Colors.light.tint}
+                  />
+                </View>
+                <ThemedText style={styles.menuItemText}>Explore</ThemedText>
+              </View>
+            </TouchableOpacity>
+
+            {/* Insight menu item */}
+            <TouchableOpacity style={styles.menuItem} onPress={handleInsightPress}>
+              <View style={styles.menuItemContent}>
+                <View style={styles.iconContainer}>
+                  <Ionicons
+                    name="analytics"
+                    size={24}
+                    color={colorScheme === 'dark' ? Colors.dark.tint : Colors.light.tint}
+                  />
+                </View>
+                <ThemedText style={styles.menuItemText}>Insight</ThemedText>
               </View>
             </TouchableOpacity>
 
