@@ -22,52 +22,25 @@ export default function TabLayout() {
     setIsMenuVisible(false);
   };
 
-  // Direct navigation helper for demonstration purposes - removed as it's not working
-
   return (
     <>
       <BurgerMenu isVisible={isMenuVisible} onClose={handleMenuClose} />
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-          // Add the burger menu to all screens
-          headerLeft: () => (
-            <Pressable onPress={handleMenuPress} style={{ marginLeft: 16 }}>
-              <Ionicons 
-                name="menu" 
-                size={24} 
-                color={colorScheme === 'dark' ? '#FFFFFF' : '#000000'} 
-              />
-            </Pressable>
-          ),
-          // Add a direct profile access button that shows an alert with instructions
-          headerRight: () => (
-            <Pressable 
-              onPress={() => {
-                // Direct navigation to settings not working due to routing configuration
-                // Show an instructional alert instead
-                alert('To access your profile:\n1. Use the burger menu\n2. Then tap "Settings"\n3. Then tap "User Profile"');
-              }} 
-              style={{ marginRight: 16 }}
-            >
-              <Ionicons 
-                name="help-circle" 
-                size={24} 
-                color={colorScheme === 'dark' ? '#FFFFFF' : '#000000'} 
-              />
-            </Pressable>
-          ),
-          // headerShown: false,
-          tabBarButton: HapticTab,
-          tabBarBackground: TabBarBackground,
-          tabBarStyle: Platform.select({
-            ios: {
-              // Use a transparent background on iOS to show the blur effect
-              position: 'absolute',
-            },
-            default: {},
-          }),
-        }}>
+          tabBarStyle: {
+            backgroundColor: Colors[colorScheme ?? 'light'].background,
+          },
+          headerStyle: {
+            backgroundColor: Colors[colorScheme ?? 'light'].background,
+          },
+          headerTintColor: Colors[colorScheme ?? 'light'].text,
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerShadowVisible: false,
+        }}
+      >
         <Tabs.Screen
           name="index"
           options={{
